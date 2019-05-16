@@ -168,3 +168,16 @@
 .mission-list-item-submitted {
     background: none
 }
+
+/*ToDo remove on GoLive*/
+img.mission-image,
+.list .mission .mission-type,
+.list .mission .actions .buttons,
+.list .mission .info span.mission-time-published,
+.list .mission .info span.mission-time-submitted,
+.list .mission .info span.mission-title-suffix-submitted,
+.list .mission .info span.mission-time-submitted_and_published,
+.list .mission .info span.mission-title-suffix-submitted_and_published{display: none !important;}
+
+.list .mission .name{display: block !important;}
+/*ToDo remove on GoLive*/
