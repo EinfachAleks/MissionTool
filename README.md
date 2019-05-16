@@ -1,6 +1,6 @@
 # Ingress Mission Authoring Tool
 
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![OPR-Tools Telegram Channel](https://img.shields.io/badge/OPR_Tools_Telegram_Channel--blue.svg?logo=telegram&style=social)](https://t.me/oprtools)
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![OPR-Tools Telegram Channel](https://telegram.org/img/website_icon.svg)](https://t.me/IngressMissionTool)
 
 Userscript for [Ingress - Mission Authoring Tool](https://mission-author-dot-betaspike.appspot.com/)
 
