@@ -1,0 +1,170 @@
+:root {
+    --White: #F5F5F5;
+    --Red: #f44336;
+    --Pink: #E91E63;
+    --Blue: #2196F3;
+    --Lirple: #9C27B0;
+    --Blght-Blue: #03A9F4;
+    --Green: #4CAF50;
+    --Light-Green: #8BC34A;
+    --Yellow: #FFEB3B;
+    --Orange: #FF9800;
+    --Dark-Orange: #FF5722;
+    --Gray: #9E9E9E;
+    --Black: #212121;
+}
+
+/*Global overriting*/
+@media only screen and (min-width: 320px) {
+    .missions-list {
+        grid-template-columns: auto;
+    }
+
+    .list .mission .actions .buttons {
+        float: left;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 640px) {
+    .missions-list {
+        grid-template-columns: auto auto;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    .list .mission .actions .buttons {
+        float: none;
+        display: block;
+    }
+
+    .missions-list {
+        grid-template-columns: auto auto auto auto auto auto;
+    }
+}
+
+.missions-list {
+    display: grid;
+    grid-gap: 15px;
+}
+
+.missions-list .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.list .mission {
+    padding: 5px;
+    margin-bottom: 0;
+    display: block;
+    align-items: normal;
+}
+
+.list .mission .details, .list .mission .actions {
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.list .mission .name {
+    font-size: 18px;
+}
+
+.list .mission .mission-time-published {
+    font-size: 14px;
+}
+
+.list .mission .info {
+    display: inline-block;
+    float: left;
+    margin-left: unset;
+    max-width: unset;
+    width: 100%;
+    padding: 5px;
+}
+
+.list .mission .mission-image {
+    margin-top: 0;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 256px;
+    height: auto;
+    justify-content: center;
+    float: none;
+    display: block;
+}
+
+.list .mission .mission-time-published {
+    font-size: 10px;
+}
+
+.list .mission .stats {
+    margin-left: 0px;
+    float: none;
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.ng-binding {
+    width: 100%;
+    display: block;
+}
+
+.list .mission .actions .buttons .button-group {
+    display: flex;
+    justify-content: center;
+}
+
+/*Hide unused Text*/
+.list .mission .actions .buttons .button-group .button-description {
+    display: none;
+}
+
+.name.ng-binding.mission-title-suffix-published {
+    display: none;
+}
+
+.list .mission .actions .buttons .action-button-hr-div {
+    display: none;
+}
+
+/* Formation Editor Button */
+.list .mission-sortieren,
+.list .visibilitty-mission-button {
+    float: right !important;
+    display: block;
+    margin-top: 40px;
+    padding: 9px 30px;
+    background-image: none;
+    background-color: var(--Green);
+    border: none;
+    color: var(--Black)
+}
+
+.list button.create-mission-button {
+    background-image: none;
+    background-color: var(--Green);
+    border: 1px solid var(--Black);
+    color: var(--Black)
+}
+
+/*remove unused Backgrounds*/
+.mission-list-item-published, .mission-list-item-submitted {
+    background-image: none;
+}
+
+.mission-list-item-submitted_and_published {
+    background: none;
+}
+
+.mission-list-item-published {
+    background: none
+}
+
+.mission-list-item-submitted {
+    background: none
+}
