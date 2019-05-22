@@ -140,12 +140,10 @@
     margin-top: 40px;
     padding: 9px 30px;
     background-image: none;
-    border: none;
-}
-.list .mission-sortieren{
+    height: 40px;
+    border: 1px solid #5afbea;
     background-color: #1f4549;
     color: #5afbea;
-    border: 1px solid #5afbea;
 }
 /*remove unused Backgrounds*/
 .mission-list-item-published, .mission-list-item-submitted {

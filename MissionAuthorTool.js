@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Mission View Changer
-// @version      0.2
+// @version      0.3
 // @description  Restyle the View of Mission Creator Tool and add new Features
 // @author       EinfachAleks, https://t.me/EinfachAleks
 // @homepageURL  https://github.com/EinfachAleks/MissionTool
@@ -42,34 +42,14 @@
 
     // find Name of listed Missions
     function nameFinder() {
-        // let mockMissionNames = [
-        //     'Cipolletti #1-12',
-        //     'Monumento San Martín 4-24',
-        //     'Sunset IV/XXIV',
-        //     '7 of 30 * Magnolia *',
-        //     'Terra Green-Blue 12',
-        //     'Anubis, Dios de la Muerte 01-48',
-        //     'Cipolletti #2-12',
-        //     'Anubis, Dios de la Muerte 23-48',
-        //     '【SATURN】SPACE ROMANCE #1',
-        //     'Sunset XXIV/XXIV',
-        //     '2 of 30 * Magnolia *',
-        //     'Komonec 4/6',
-        //     '【SATURN】SPACE ROMANCE #2',
-        //     'Sunset XIII/XXIV'
-        // ];
-        // let mockObj = Object.setPrototypeOf(mockMissionNames, Object.prototype);
 
         let $splitName = [];
         let $nameArray = [].concat(...$namePublished, ...$nameSubmitted, ...$nameSubmittedPublished, ...$nameDrafts);
         $.each($nameArray, function (index, value) {
-            let obj = value;
             let name = $(value).text().trim();
-            let newName;
 
             $splitName = [].concat(...$splitName, name);
         });
-        // $splitName = [].concat(...$splitName, mockObj);
         $splitName = [].concat(...$splitName);
 
         $.each($splitName, function (index, value) {
@@ -123,7 +103,6 @@
 
     // Roman Number Converter
     function romanToArabic(value) {
-        let $oldValue = value.split(regEx);
         let newValue = "";
         let newNumber;
         let $splittedArray = value.match(regEx);
@@ -173,11 +152,6 @@
             let $actionButton = $('.actions');
             let $detailsInfo = $('.details .info');
             let $editorButton = $('.visibilitty-mission-button');
-
-            //set Visibility to hide per default
-            // $detailsInfo.addClass('hide');
-            // $actionButton.addClass('hide');
-            // $editorButton.html('Show Editor Information');
 
             // Visibility of Modification Buttons
             $editorButton.on('click', function () {
