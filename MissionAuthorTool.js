@@ -1,69 +1,48 @@
 // ==UserScript==
-// @name         Mission View Changer
-// @version      0.3
-// @description  Restyle the View of Mission Creator Tool and add new Features
-// @author       EinfachAleks, https://t.me/EinfachAleks
-// @homepageURL  https://github.com/EinfachAleks/MissionTool
-// @match        https://mission-author-dot-betaspike.appspot.com/
-// @icon         https://raw.githubusercontent.com/EinfachAleks/MissionTool/master/image/specops.ico
-// @grant        unsafeWindow
-// @grant        GM_addStyle
-// @grant        GM_getResourceText
-// @issues       https://github.com/EinfachAleks/MissionTool/issues
-// @downloadURL  https://raw.githubusercontent.com/EinfachAleks/MissionTool/master/MissionAuthorTool.js
-// @updateURL    https://raw.githubusercontent.com/EinfachAleks/MissionTool/master/MissionAuthorTool.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js
-// @require      https://cdnjs.cloudflare.com/ajax/libs/tinysort/3.2.5/tinysort.min.js
-// @resource     mainCss https://raw.githubusercontent.com/EinfachAleks/MissionTool/master/style.css
+// @name                Mission View Changer
+// @version             0.3
+// @description         Restyle the View of Mission Creator Tool and add new Features
+// @author              EinfachAleks, https://t.me/EinfachAleks
+// @license             MIT
+// @homepageURL         https://github.com/EinfachAleks/MissionTool
+// @contributionAmoun   https://github.com/EinfachAleks/MissionTool
+// @match               https://mission-author-dot-betaspike.appspot.com/
+// @icon                https://raw.githubusercontent.com/EinfachAleks/MissionTool/master/image/specops.ico
+// @grant               unsafeWindow
+// @grant               GM_addStyle
+// @grant               GM_getResourceText
+// @downloadURL         https://raw.githubusercontent.com/EinfachAleks/MissionTool/master/MissionAuthorTool.js
+// @updateURL           https://raw.githubusercontent.com/EinfachAleks/MissionTool/master/MissionAuthorTool.js
+// @issues              https://github.com/EinfachAleks/MissionTool/issues
+// @require             https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js
+// @require             https://cdnjs.cloudflare.com/ajax/libs/tinysort/3.2.5/tinysort.min.js
+// @resource            mainCss https://raw.githubusercontent.com/EinfachAleks/MissionTool/master/style.css
 // ==/UserScript==
 
 (function ($) {
     "use strict";
 
     // Global Variables
-    const regEx = /\bM{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})\b/gsm;
-    const $namePublished = $('span.mission-title-published');
-    const $nameSubmitted = $('span.mission-title-submitted');
-    const $nameDrafts = $('span.mission-title-draft_of_published_mission');
-    const $nameSubmittedPublished = $('span.mission-title-submitted_and_published');
+    const $list = $('.missions-list .mission');
 
-    // Call init function
+    /**
+     * @name Init function Caller
+     * @description call the Init Function
+     */
     $(function () {
         setTimeout(function () {
-            init();
+            editorButton();
+            missionStatusSetter();
+            missionSorter();
         }, 1000);
     });
 
-    function init() {
-        nameFinder();
-        editorButton();
-        missionSorter();
-    }
-
-    // find Name of listed Missions
-    function nameFinder() {
-
-        let $splitName = [];
-        let $nameArray = [].concat(...$namePublished, ...$nameSubmitted, ...$nameSubmittedPublished, ...$nameDrafts);
-        $.each($nameArray, function (index, value) {
-            let name = $(value).text().trim();
-
-            $splitName = [].concat(...$splitName, name);
-        });
-        $splitName = [].concat(...$splitName);
-
-        $.each($splitName, function (index, value) {
-            let statusBox = $(value).parents('.details').find('.statusBox');
-            statusBox.attr('data-status', 'draft');
-
-            romanToArabic(value);
-        });
-    }
-
-    function missionSorter() {
-        let $list = $('.missions-list .mission'),
-            $missionSorter = $('.mission-sortieren'),
-            statusOne = $list.find('.info span.mission-title-published').attr('ng-class', 'mission-title-draft_of_published_mission'),
+    /**
+     * @name missionStatusSetter
+     * @description set the Mission Status on a data attr
+     */
+    function missionStatusSetter() {
+        let statusOne = $list.find('.info span.mission-title-published').attr('ng-class', 'mission-title-draft_of_published_mission'),
             statusTwo = $list.find('.info span.mission-title-submitted').attr('ng-class', 'mission-title-submitted'),
             statusThree = $list.find('.info span.mission-title-submitted_and_published').attr('ng-class', 'mission-title-submitted_and_published'),
             statusFour = $list.find('.info span.mission-title-draft_of_published_mission').attr('ng-class', 'mission-title-draft_of_published_mission');
@@ -84,7 +63,14 @@
             let statusBox = $(value).parents('.details').find('.statusBox');
             statusBox.attr('data-status', 'draft');
         });
+    }
 
+    /**
+     * @name missionSorter
+     * @description sorting the Mission on the View
+     */
+    function missionSorter() {
+        let $missionSorter = $('.mission-sortieren');
         $missionSorter.on('change', function () {
             let sortingvalue = $(this).val();
             if ('status_asc' === sortingvalue){
@@ -95,42 +81,14 @@
                 tinysort($list, {order: 'asc', natural: true});
             } else if ('name_desc' === sortingvalue) {
                 tinysort($list, {order: 'desc', natural: true});
-            } else {
-                tinysort($list);
             }
         });
     }
 
-    // Roman Number Converter
-    function romanToArabic(value) {
-        let newValue = "";
-        let newNumber;
-        let $splittedArray = value.match(regEx);
-
-        $.each($splittedArray, function (index, value) {
-            if ("" !== value) {
-                newNumber = fromRoman(value);
-                newValue = value.replace(regEx, newNumber);
-                let newValueLength = newValue.toString().length;
-                newValue = newValue.slice(0,  newValueLength/ 2);
-            }
-        });
-    }
-
-    function fromRoman(value) {
-        let result = 0;
-        let decimal = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
-        let roman = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
-        for (let i = 0; i <= decimal.length; i++) {
-            while (value.indexOf(roman[i]) === 0) {
-                result += decimal[i];
-                value = value.replace(roman[i], '');
-            }
-        }
-        return result;
-    }
-
-    // Editor Button
+    /**
+     * @name editorButton
+     * @description add new Buttons
+     */
     function editorButton() {
         let $createMissionButton = $('.create-mission-button'),
             $statusBoxRaw = "<div class='statusBox' data-status=''></div>",
