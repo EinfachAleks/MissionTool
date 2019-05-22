@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name                Mission View Changer
-// @version             0.4
+// @version             0.4.1
 // @description         Restyle the View of Mission Creator Tool and add new Features
 // @author              EinfachAleks, https://t.me/EinfachAleks
 // @license             MIT
@@ -21,17 +21,13 @@
 
 (function ($) {
     "use strict";
-
-    // Global Variables
-    const $list = $('.missions-list .mission');
-
     /**
      * @name Init
      * @description call the Init Function
      */
     $(function () {
         setTimeout(function () {
-
+            nameFinder();
             editorButton();
             missionStatusSetter();
             missionSorter();
@@ -39,10 +35,65 @@
     });
 
     /**
+     * @name nameFinder
+     * @description find all Mission names
+     */
+    function nameFinder() {
+        let $namePublished = $('span.mission-title-published');
+        let $nameSubmitted = $('span.mission-title-submitted');
+        let $nameDrafts = $('span.mission-title-draft_of_published_mission');
+        let $nameSubmittedPublished = $('span.mission-title-submitted_and_published');
+        let $splitName = [];
+        let $nameArray = [].concat(...$namePublished, ...$nameSubmitted, ...$nameSubmittedPublished, ...$nameDrafts);
+        $.each($nameArray, function (index, value) {
+            let name = $(value).text().trim();
+            $splitName = [].concat(...$splitName, name);
+        });
+        $splitName = [].concat(...$splitName);
+        $.each($splitName, function (index, value) {
+            romanToArabic(value);
+        });
+    }
+
+    /**
+     * @name romanToArabic
+     * @description converting Roman Numbers to Arabic Numbers
+     */
+    function romanToArabic(value) {
+        let regEx = /\bM{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})\b/gsm;
+        let newValue = "";
+        let newNumber;
+        let $splittedArray = value.match(regEx);
+
+        function fromRoman(value) {
+            let result = 0;
+            let decimal = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+            let roman = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+            for (let i = 0; i <= decimal.length; i++) {
+                while (value.indexOf(roman[i]) === 0) {
+                    result += decimal[i];
+                    value = value.replace(roman[i], '');
+                }
+            }
+            return result;
+        }
+
+        $.each($splittedArray, function (index, value) {
+            if ("" !== value) {
+                newNumber = fromRoman(value);
+                newValue = value.replace(regEx, newNumber);
+                let newValueLength = newValue.toString().length;
+                newValue = newValue.slice(0,  newValueLength/ 2);
+            }
+        });
+    }
+
+    /**
      * @name missionStatusSetter
      * @description set the Mission Status on a data attr
      */
     function missionStatusSetter() {
+        let $list = $('.missions-list .mission');
         let statusOne = $list.find('.info span.mission-title-published').attr('ng-class', 'mission-title-draft_of_published_mission'),
             statusTwo = $list.find('.info span.mission-title-submitted').attr('ng-class', 'mission-title-submitted'),
             statusThree = $list.find('.info span.mission-title-submitted_and_published').attr('ng-class', 'mission-title-submitted_and_published'),
@@ -71,6 +122,7 @@
      * @description sorting the Mission on the View
      */
     function missionSorter() {
+        let $list = $('.missions-list .mission');
         let $missionSorter = $('.mission-sortieren');
         $missionSorter.on('change', function () {
             let sortingvalue = $(this).val();
