@@ -23,19 +23,71 @@
     "use strict";
 
     // Global Variables
+    const regEx = /\bM{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})\b/gsm;
+    const $namePublished = $('span.mission-title-published');
+    const $nameSubmitted = $('span.mission-title-submitted');
+    const $nameDrafts = $('span.mission-title-draft_of_published_mission');
+    const $nameSubmittedPublished = $('span.mission-title-submitted_and_published');
     const $list = $('.missions-list .mission');
 
-    /**
-     * @name Init function Caller
-     * @description call the Init Function
-     */
+    // Call init function
     $(function () {
         setTimeout(function () {
-            editorButton();
-            missionStatusSetter();
-            missionSorter();
+            init();
         }, 1000);
     });
+
+    function init() {
+        nameFinder();
+        editorButton();
+        missionStatusSetter();
+        missionSorter();
+    }
+
+    // find Name of listed Missions
+    function nameFinder() {
+        let $splitName = [];
+        let $nameArray = [].concat(...$namePublished, ...$nameSubmitted, ...$nameSubmittedPublished, ...$nameDrafts);
+        $.each($nameArray, function (index, value) {
+            let name = $(value).text().trim();
+            console.log("name", name);
+            $splitName = [].concat(...$splitName, name);
+        });
+        $splitName = [].concat(...$splitName);
+        $.each($splitName, function (index, value) {
+            // console.log("nameFinder", value);
+            romanToArabic(value);
+        });
+    }
+
+    // Roman Number Converter
+    function romanToArabic(value) {
+        let newValue = "";
+        let newNumber;
+        let $splittedArray = value.match(regEx);
+
+        function fromRoman(value) {
+            let result = 0;
+            let decimal = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1];
+            let roman = ["M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I"];
+            for (let i = 0; i <= decimal.length; i++) {
+                while (value.indexOf(roman[i]) === 0) {
+                    result += decimal[i];
+                    value = value.replace(roman[i], '');
+                }
+            }
+            return result;
+        }
+
+        $.each($splittedArray, function (index, value) {
+            if ("" !== value) {
+                newNumber = fromRoman(value);
+                newValue = value.replace(regEx, newNumber);
+                let newValueLength = newValue.toString().length;
+                newValue = newValue.slice(0,  newValueLength/ 2);
+            }
+        });
+    }
 
     /**
      * @name missionStatusSetter
@@ -132,5 +184,5 @@
 
 })(jQuery);
 
-let mainCss = GM_getResourceText("mainCss");
-GM_addStyle(mainCss);
+// let mainCss = GM_getResourceText("mainCss");
+// GM_addStyle(mainCss);
