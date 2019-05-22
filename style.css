@@ -86,8 +86,8 @@
 }
 
 .list .mission .mission-image {
-    margin-top: 0;
     margin: 0 auto;
+    margin-top: 0;
     width: 100%;
     max-width: 256px;
     height: auto;
@@ -140,18 +140,13 @@
     margin-top: 40px;
     padding: 9px 30px;
     background-image: none;
-    background-color: var(--Green);
     border: none;
-    color: var(--Black)
 }
-
-.list button.create-mission-button {
-    background-image: none;
-    background-color: var(--Green);
-    border: 1px solid var(--Black);
-    color: var(--Black)
+.list .mission-sortieren{
+    background-color: #1f4549;
+    color: #5afbea;
+    border: 1px solid #5afbea;
 }
-
 /*remove unused Backgrounds*/
 .mission-list-item-published, .mission-list-item-submitted {
     background-image: none;
@@ -168,16 +163,3 @@
 .mission-list-item-submitted {
     background: none
 }
-
-/*ToDo remove on GoLive*/
-img.mission-image,
-.list .mission .mission-type,
-.list .mission .actions .buttons,
-.list .mission .info span.mission-time-published,
-.list .mission .info span.mission-time-submitted,
-.list .mission .info span.mission-title-suffix-submitted,
-.list .mission .info span.mission-time-submitted_and_published,
-.list .mission .info span.mission-title-suffix-submitted_and_published{display: none !important;}
-
-.list .mission .name{display: block !important;}
-/*ToDo remove on GoLive*/
