@@ -1,7 +1,7 @@
 # Ingress Mission Authoring Tool
 
 [![IngressMissionTool Telegram Channel](https://img.shields.io/badge/Telegram-Join%20to%20the%20Channel-blue.svg)](https://t.me/IngressMissionTool)
-[![By me a Coffe or Club Mate](https://img.shields.io/badge/Coffe-By%20me%20a%20Coffe%20or%20Club%20Mate-brightgreen.svg)](https://www.buymeacoffee.com/l/MissionTool)
+[![By me a Coffe or Club Mate](https://img.shields.io/badge/Coffe-By%20me%20a%20Coffe%20or%20Club%20Mate-brightgreen.svg)](https://www.buymeacoffee.com/l/MissionTool) [![wakatime](https://wakatime.com/badge/github/EinfachAleks/MissionTool.svg)](https://wakatime.com/badge/github/EinfachAleks/MissionTool)
 
 Userscript for [Ingress - Mission Authoring Tool](https://mission-author-dot-betaspike.appspot.com/)
 
